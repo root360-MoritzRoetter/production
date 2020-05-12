@@ -1,4 +1,8 @@
 DirectoryIndex index.php
+AuthType Basic
+AuthName "Authentication Required"
+AuthUserFile "/var/www/web/.htpasswd"
+Require valid-user
 
 <IfModule mod_negotiation.c>
     Options -MultiViews
