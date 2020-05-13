@@ -9,6 +9,13 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - composer install 
+    finally:
+      - echo This always runs even if the login command fails 
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - bin/console system:generate-jwt-secret
       - echo Settting up .env file
       - export APP_SECRET=$(bin/console system:generate-app-secret)
       -  | 
@@ -19,18 +26,13 @@ phases:
          s#%ENV%#${ENV}#g;
          s#%APP_SECRET%#${APP_SECRET}#g;
          " .env.dist > .env || exit $?
-    finally:
-      - echo This always runs even if the login command fails 
       - cat .env
-  build:
-    commands:
-      - echo Entered the build phase...
-      - echo Build started on `date`
     finally:
       - echo This always runs even if the install command fails
   post_build:
     commands:
       - echo Entered the post_build phase...
+      - bin/console system:install --create-database --basic-setup --drop-database
       - echo Build completed on `date`
 artifacts:
   files:
