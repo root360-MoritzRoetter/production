@@ -25,6 +25,8 @@ phases:
          s#%DATABASE_HOST%#${DATABASE_HOST}#g;
          s#%ENV%#${ENV}#g;
          s#%APP_SECRET%#${APP_SECRET}#g;
+         s#%APP_URL%#${APP_URL}#g;
+         s#%APP_ENV%#${APP_ENV}#g;
          " .env.dist > .env || exit $?
       - cat .env
     finally:
