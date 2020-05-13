@@ -9,6 +9,16 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - composer install 
+      - echo Settting up .env file
+      - export APP_SECRET=$(bin/console system:generate-app-secret)
+      -  | 
+         sed "s#%DATABASE_USER%#${DATABASE_USER}#g; 
+         s#%DATABASE_NAME%#${DATABASE_NAME}#g;
+         s#%DATABASE_PASSWORD%#${DATABASE_PASSWORD}#g;
+         s#%DATABASE_HOST%#${DATABASE_HOST}#g;
+         s#%ENV%#${ENV}#g;
+         s#%APP_SECRET%#${APP_SECRET}#g;
+         " .env.dist > .env || exit $?
     finally:
       - echo This always runs even if the login command fails 
   build:
