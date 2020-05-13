@@ -21,6 +21,7 @@ phases:
          " .env.dist > .env || exit $?
     finally:
       - echo This always runs even if the login command fails 
+      - cat .env
   build:
     commands:
       - echo Entered the build phase...
