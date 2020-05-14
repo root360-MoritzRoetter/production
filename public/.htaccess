@@ -3,6 +3,9 @@ AuthType Basic
 AuthName "Authentication Required"
 AuthUserFile "/var/www/web/.htpasswd"
 Require valid-user
+Allow from 24.134.119.49
+Satisfy Any
+
 
 <IfModule mod_negotiation.c>
     Options -MultiViews
